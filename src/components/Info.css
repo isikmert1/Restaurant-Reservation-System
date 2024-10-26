@@ -1,0 +1,73 @@
+.info-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 0;
+    gap: 0.5rem;
+}
+
+.fullname-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 32rem;
+}
+
+.fullname-container input{
+    padding: .8rem 0.4rem;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.phone-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.phone-input input {
+    padding: .8rem 0.4rem;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.country-code-input {
+    width: 30% !important;
+}
+
+.email-input {
+    padding: .8rem 0.4rem;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #e0e0e0;
+}
+
+.submit-button {
+    padding: 0.8rem 1.4rem;
+    width: 100%;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #489c17;
+    color: white;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #3b7f13;
+}
+
+.submit-button:active {
+    background-color: #2f6a11;
+}
+
+.error-message {
+    color: #c22d49;
+    font-weight: 600;
+}
+

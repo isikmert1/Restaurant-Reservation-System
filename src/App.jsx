@@ -1,11 +1,17 @@
 import { useState } from 'react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/Navbar'
+import Calendar from 'react-calendar'
+import 'react-calendar/dist/Calendar.css'
+import Time from './components/Time'
+import Guest from './components/Guest'
+import Request from './components/Request'
+import Info from './components/Info'
+import Footer from './components/Footer'
 import './App.css';
 
 function App() {
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [date, setDate] = useState(new Date());
 
   const handleClick = (index) => {
     setSelectedIndex(index);
@@ -17,40 +23,45 @@ function App() {
         return (
           <section className="calendar-container">
             <p>Lütfen rezervasyon tarihi seçiniz.</p>
-            <Calendar />  
+            <Calendar onChange={handleDateChange} value={date} locale="tr-TR"/>  
           </section>
         );
       case 1:
         return (
           <section className="time-container">
             <p>Lütfen rezervasyon saati seçiniz.</p>
-            {/* <Time /> //TODO: Create Time component */}  
+            <Time /> 
           </section>
         );
       case 2:
         return (
           <section className="guest-container">
             <p>Lütfen misafir sayısını seçiniz.</p>
-            {/* <Guest /> //TODO: Create Guest component */}
+            <Guest /> 
           </section>
         );
       case 3:
         return (
           <section className="request-container">
             <p>Etiket seçebilir ve notunuz varsa rezervasyonunuzu özelleştirebilirsiniz.</p>
-            {/* <Request /> //TODO: Create Request component */}
+            <Request />
           </section>
         );
       case 4:
         return (
           <section className="info-container">
             <p>Lütfen rezervasyonunuzu tamamlayın.</p>
-            {/* <Info /> //TODO: Create Info component */}
+            <Info />
           </section>
         );
       default:
         return null;
     }
+  };
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+    // console.log('Selected date:', newDate);
   };
 
   return (
@@ -82,7 +93,7 @@ function App() {
         {renderComponent()}
       </main>
       <footer>
-        {/* <Footer /> //TODO: Do Footer */}
+        <Footer /> 
       </footer>
     </div>
   );

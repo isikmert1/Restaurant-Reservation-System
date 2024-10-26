@@ -1,6 +1,6 @@
 .intro-container {
   padding: 1rem;
-  width: 36rem;
+  max-width: 36rem;
   margin-inline: auto;
 }
 
@@ -53,3 +53,12 @@
   gap: 0.8em;
   padding: 1.5rem;
 }
+
+.time-container, .guest-container, .request-container, .info-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+

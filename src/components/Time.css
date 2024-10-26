@@ -1,0 +1,37 @@
+.time-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.8rem 0;
+}
+
+.time-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.time-button-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    max-width: 35rem;
+}
+
+.time-buttons {
+    padding: 0.8rem 1.4rem;
+    width: 6rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: white;
+    cursor: pointer;
+}
+
+.time-buttons.selected {
+    color: #ba0f30;
+    border-color: #ba0f30;
+}
