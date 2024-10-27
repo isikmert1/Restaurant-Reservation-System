@@ -5,6 +5,7 @@
     align-items: center;
     padding: 0.8rem 0;
     gap: 0.5rem;
+    width: 36rem;
 }
 
 .fullname-container {
@@ -12,7 +13,7 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    max-width: 32rem;
+    width: 36rem;
 }
 
 .fullname-container input{
