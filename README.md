@@ -19,8 +19,8 @@ This is a multi-step reservation system built with **React**, **Vite**, **Tailwi
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/YourUsername/restaurant-reservation.git
-   cd restaurant-reservation
+   git clone https://github.com/isikmert1/Restaurant-Reservation-System.git
+   cd Restaurant-Reservation-System
    
 2. **Install Dependencies:**
    ```bash
@@ -95,7 +95,7 @@ restaurant-reservation/
 
 ## Usage
 
-- **Navigate Through Steps**: Click on “Tarih,” “Saat,” “Misafir,” “İstek,” and “Bilgi” to enter reservation details.
+- **Navigate Through Steps**: Click on “Tarih” (Date), “Saat” (Time), “Misafir” (Guests), “İstek” (Requests), and “Bilgi” (Info) to enter reservation details.
 - **Data Storage**: All data is stored in the `ReservationContext`. See `DebugReservationData` (if you create one) or open the React DevTools to watch the context values update.
 - **Validation**: The `Info.jsx` step demonstrates advanced validation with React Hook Form and Zod.
 - **Ready for Backend**: Currently, data is stored locally. Once you have an API, you can send the `reservationData` to your server in the final step.
