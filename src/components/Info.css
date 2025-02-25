@@ -13,7 +13,7 @@
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    width: 36rem;
+    width: 100%;
 }
 
 .fullname-container input{
@@ -70,5 +70,17 @@
 .error-message {
     color: #c22d49;
     font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .info-form {
+        width: 75%;
+    }
+}
+
+@media (max-width: 425px) {
+    .info-form {
+        width: 100%;
+    }
 }
 

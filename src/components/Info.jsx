@@ -1,114 +1,156 @@
-import { useState } from 'react';
-import './Info.css';
+// Info.jsx
+import React from "react"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+import "./Info.css"
+import { useContext } from "react"
+import { ReservationContext } from "../ReservationContext"
+
+// Import shadcn form components
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+
+// Define Zod schema for validation
+const infoSchema = z.object({
+  firstName: z
+    .string()
+    .min(1, "Adınız gereklidir.")
+    .regex(/^[a-zA-ZğüşöçİĞÜŞÖÇ\s]+$/, "Adınız sadece harflerden oluşmalıdır."),
+  lastName: z
+    .string()
+    .min(1, "Soyadınız gereklidir.")
+    .regex(/^[a-zA-ZğüşöçİĞÜŞÖÇ\s]+$/, "Soyadınız sadece harflerden oluşmalıdır."),
+  countryCode: z
+    .string()
+    .min(2, "Geçerli ülke kodu giriniz.")
+    .regex(/^\+\d+$/, "Ülke kodu geçerli değil."),
+  phone: z
+    .string()
+    .min(7, "Telefon numarası en az 7 haneli olmalı.")
+    .regex(/^\d+$/, "Telefon numarası sadece rakamlardan oluşmalıdır."),
+  email: z.string().email("Geçerli bir e-posta adresi giriniz."),
+  allergyInfo: z.string().optional(),
+})
 
 function Info() {
-    const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        countryCode: '+90',
-        phone: '',
-        email: '',
-        allergyInfo: '',
-    });
-    const [error, setError] = useState(''); // State for error messages
+  const { reservationData, setReservationData } = useContext(ReservationContext);
+  const form = useForm({
+    resolver: zodResolver(infoSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      countryCode: "+90",
+      phone: "",
+      email: "",
+      allergyInfo: "",
+    },
+  });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
+  const onSubmit = (values) => {
+    // Update global state with form values
+    setReservationData(prev => ({ ...prev, info: values }));
+    console.log("Info form submitted:", values);
+    // When backend is ready, you'll send reservationData to the server
+  };
 
-        // Validation rules
-        if (name === 'firstName' || name === 'lastName') {
-            // Only allow letters for first and last names
-            if (/[^a-zA-ZğüşöçİĞÜŞÖÇ\s]/.test(value)) return;
-        } else if (name === 'countryCode') {
-            // Ensure country code starts with + and only has numbers after it
-            if (!/^\+/.test(value)) {
-                // Prepend "+" if it's missing
-                setFormData((prevData) => ({
-                    ...prevData,
-                    countryCode: '+' + value.replace(/^\+/, ''),
-                }));
-                return;
-            }
-            if (!/^\+\d*$/.test(value)) return; // Allow only numbers after the +
-        } else if (name === 'phone') {
-            // Only allow numbers for phone
-            if (/[^0-9]/.test(value)) return;
-        }
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="info-form">
 
-        setFormData((prevData) => ({
-            ...prevData,
-            [name]: value,
-        }));
-    };
+        <div className="fullname-container">
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Adınız*" {...field} />
+                </FormControl>
+                <FormMessage className="error-message" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem>
+                <FormControl>
+                  <Input placeholder="Soyadınız*" {...field} />
+                </FormControl>
+                <FormMessage className="error-message" />
+              </FormItem>
+            )}
+          />
+        </div>
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+        <div className="phone-input">
+          <FormField
+            control={form.control}
+            name="countryCode"
+            render={({ field }) => (
+              <FormItem className="country-code-input">
+                <FormControl>
+                  <Input placeholder="+90" {...field} maxLength={4} />
+                </FormControl>
+                <FormMessage className="error-message" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem className="phone-number-input">
+                <FormControl>
+                  <Input placeholder="Telefon Numarası*" {...field} />
+                </FormControl>
+                <FormMessage className="error-message" />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        if (formData.countryCode === '+' || formData.countryCode.length < 2) {
-            setError('Please enter a valid country code with numbers after the "+" sign.');
-            return;
-        }
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="E-Posta Adresiniz*" {...field} className="email-input" />
+              </FormControl>
+              <FormMessage className="error-message" />
+            </FormItem>
+          )}
+        />
 
-        setError(''); 
-        console.log(formData);
-    };
+        <FormField
+          control={form.control}
+          name="allergyInfo"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Input placeholder="Alerjen Bilgisi" {...field} />
+              </FormControl>
+              <FormMessage className="error-message" />
+            </FormItem>
+          )}
+        />
 
-    return (
-        <form onSubmit={handleSubmit} className="info-form">
-            <div className='fullname-container'>
-                <input
-                    type="text"
-                    name="firstName"
-                    placeholder='Adınız*'
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                />
-                <input
-                    type="text"
-                    name="lastName"
-                    placeholder='Soyadınız*'
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                />
-            </div>
-            <div className="phone-input">
-                <input
-                    type="text"
-                    name="countryCode"
-                    placeholder='Ülke Kodu*'
-                    value={formData.countryCode}
-                    onChange={handleChange}
-                    required
-                    maxLength="4"
-                    className="country-code-input"
-                />
-                <input
-                    type="tel"
-                    name="phone"
-                    placeholder='Telefon Numarası*'
-                    value={formData.phone}
-                    onChange={handleChange}
-                    required
-                    className='phone-number-input'
-                />
-            </div>
-            <input
-                type="email"
-                name="email"
-                placeholder='E-Posta Adresiniz*'
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className='email-input'
-            />
-            {error && <p className="error-message">{error}</p>} 
-            <button type="submit" className="submit-button">
-                Tamamla
-            </button>
-        </form>
-    );
+        <Button type="submit" className="submit-button">
+          Tamamla
+        </Button>
+      </form>
+    </Form>
+  );
 }
 
 export default Info;

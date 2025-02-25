@@ -8,3 +8,9 @@
     width: 100%;
     z-index: 100;
 }
+
+@media (max-height: 840px) {
+    .footer-component {
+        position: relative;
+    }
+}

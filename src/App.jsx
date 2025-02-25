@@ -1,20 +1,26 @@
-import { useState } from 'react';
-import Navbar from './components/Navbar'
-import Calendar from 'react-calendar'
-import 'react-calendar/dist/Calendar.css'
-import Time from './components/Time'
-import Guest from './components/Guest'
-import Request from './components/Request'
-import Info from './components/Info'
-import Footer from './components/Footer'
+// App.jsx
+import { useState, useContext } from 'react';
+import Navbar from './components/Navbar';
+import { Calendar } from "@/components/ui/calendar"
+import Time from './components/Time';
+import Guest from './components/Guest';
+import Request from './components/Request';
+import Info from './components/Info';
+import Footer from './components/Footer';
 import './App.css';
 
+import { ReservationContext } from './ReservationContext';
+
 function App() {
+  const { reservationData, setReservationData } = useContext(ReservationContext);
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [date, setDate] = useState(new Date());
 
   const handleClick = (index) => {
     setSelectedIndex(index);
+  };
+
+  const handleDateChange = (newDate) => {
+    setReservationData(prev => ({ ...prev, date: newDate }));
   };
 
   const renderComponent = () => {
@@ -22,46 +28,48 @@ function App() {
       case 0:
         return (
           <section className="calendar-container">
-            <p>Lütfen rezervasyon tarihi seçiniz.</p>
-            <Calendar onChange={handleDateChange} value={date} locale="tr-TR"/>  
+            <p className='container-para'>Lütfen rezervasyon tarihi seçiniz.</p>
+            <div className="w-full max-w-[500px] mx-auto">
+            <Calendar
+              mode="single" 
+              selected={reservationData.date}
+              onSelect={(newDate) => handleDateChange(newDate)}
+              classNames="rounded-md" // Add Tailwind classes as needed
+            />
+            </div>
           </section>
         );
       case 1:
         return (
           <section className="time-container">
-            <p>Lütfen rezervasyon saati seçiniz.</p>
-            <Time /> 
+            <p className='container-para'>Lütfen rezervasyon saati seçiniz.</p>
+            <Time />
           </section>
         );
       case 2:
         return (
           <section className="guest-container">
-            <p>Lütfen misafir sayısını seçiniz.</p>
-            <Guest /> 
+            <p className='container-para'>Lütfen misafir sayısını seçiniz.</p>
+            <Guest />
           </section>
         );
       case 3:
         return (
           <section className="request-container">
-            <p>Etiket seçebilir ve notunuz varsa rezervasyonunuzu özelleştirebilirsiniz.</p>
+            <p className='container-para'>Etiket seçebilir ve notunuz varsa rezervasyonunuzu özelleştirebilirsiniz.</p>
             <Request />
           </section>
         );
       case 4:
         return (
           <section className="info-container">
-            <p>Lütfen rezervasyonunuzu tamamlayın.</p>
+            <p className='container-para'>Lütfen rezervasyonunuzu tamamlayın.</p>
             <Info />
           </section>
         );
       default:
         return null;
     }
-  };
-
-  const handleDateChange = (newDate) => {
-    setDate(newDate);
-    // console.log('Selected date:', newDate);
   };
 
   return (
